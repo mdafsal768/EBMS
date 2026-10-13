@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EventHub - Authentication</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Main Style CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="auth-body">
+    <div class="auth-wrapper">
+        <!-- Brand / Graphic Sidebar -->
+        <div class="auth-banner">
+            <div class="banner-content">
+                <div class="logo">
+                    <i class="fa-solid fa-ticket"></i>
+                    <span>EventHub</span>
+                </div>
+                <h2>Discover & Book Unforgettable Experiences</h2>
+                <p>Access thousands of live events, concerts, exhibitions, and technical workshops in one unified platform.</p>
+                <div class="banner-features">
+                    <div class="feature-item"><i class="fa-solid fa-bolt"></i> Instant E-Tickets</div>
+                    <div class="feature-item"><i class="fa-solid fa-shield-halved"></i> 100% Verified Access</div>
+                    <div class="feature-item"><i class="fa-solid fa-couch"></i> Dynamic Seat Selection</div>
+                </div>
+            </div>
+            <div class="banner-overlay"></div>
+        </div>
+
+        <!-- Auth Form Section -->
+        <div class="auth-container">
+            <div class="auth-card">
+                <!-- Navigation Tabs -->
+                <div class="auth-tabs">
+                    <button type="button" class="tab-btn active" id="tab-login" onclick="showLogin()">Login</button>
+                    <button type="button" class="tab-btn" id="tab-register" onclick="showRegister()">Register</button>
+                </div>
+
+                <!-- Alert Message Container -->
+                <div id="auth-alert" class="alert-box hidden"></div>
+
+                <!-- LOGIN FORM -->
+                <form id="login-form" class="auth-form" onsubmit="loginUser(event)">
+                    <div class="role-selector">
+                        <label class="role-option active" id="role-label-user">
+                            <input type="radio" name="auth-role" value="user" checked onchange="toggleRoleUI('user')">
+                            <i class="fa-solid fa-user"></i> User
+                        </label>
+                        <label class="role-option" id="role-label-admin">
+                            <input type="radio" name="auth-role" value="admin" onchange="toggleRoleUI('admin')">
+                            <i class="fa-solid fa-user-shield"></i> Admin
+                        </label>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="login-email">Email Address</label>
+                        <div class="input-icon-wrapper">
+                            <i class="fa-regular fa-envelope"></i>
+                            <input type="email" id="login-email" placeholder="name@example.com" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="login-password">Password</label>
+                        <div class="input-icon-wrapper">
+                            <i class="fa-solid fa-lock"></i>
+                            <input type="password" id="login-password" placeholder="Enter your password" required>
+                        </div>
+                    </div>
+
+                    <div class="demo-badge-info hidden" id="admin-demo-info">
+                        <i class="fa-solid fa-circle-info"></i> Demo Admin Credentials:<br>
+                        <strong>Email:</strong> admin@event.com | <strong>Password:</strong> admin123
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-block shadow-btn">
+                        <span>Sign In</span>
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                </form>
+
+                <!-- REGISTER FORM -->
+                <form id="register-form" class="auth-form hidden" onsubmit="registerUser(event)">
+                    <div class="form-group">
+                        <label for="reg-fullname">Full Name</label>
+                        <div class="input-icon-wrapper">
+                            <i class="fa-regular fa-user"></i>
+                            <input type="text" id="reg-fullname" placeholder="John Doe" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="reg-email">Email Address</label>
+                        <div class="input-icon-wrapper">
+                            <i class="fa-regular fa-envelope"></i>
+                            <input type="email" id="reg-email" placeholder="name@example.com" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="reg-phone">Phone Number</label>
+                        <div class="input-icon-wrapper">
+                            <i class="fa-solid fa-phone"></i>
+                            <input type="tel" id="reg-phone" placeholder="10-digit mobile number" pattern="[0-9]{10}" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="reg-password">Password</label>
+                        <div class="input-icon-wrapper">
+                            <i class="fa-solid fa-lock"></i>
+                            <input type="password" id="reg-password" placeholder="Min. 6 characters" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="reg-confirm-password">Confirm Password</label>
+                        <div class="input-icon-wrapper">
+                            <i class="fa-solid fa-shield-cat"></i>
+                            <input type="password" id="reg-confirm-password" placeholder="Re-enter password" required>
+                        </div>
+                    </div>
+
+                    <div class="form-checkbox">
+                        <input type="checkbox" id="reg-terms" required>
+                        <label for="reg-terms">I agree to the <a href="about.html">Terms & Conditions</a></label>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-block shadow-btn">
+                        <span>Create Account</span>
+                        <i class="fa-solid fa-user-plus"></i>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Core App Logic -->
+    <script src="script.js"></script>
+</body>
+</html>

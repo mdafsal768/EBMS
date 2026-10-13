@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EventHub - Admin Control Panel</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header class="navbar-header admin-header">
+        <nav class="navbar">
+            <a href="admin.html" class="nav-logo">
+                <i class="fa-solid fa-user-shield"></i>
+                <span>EventHub Admin</span>
+            </a>
+            <ul class="nav-menu">
+                <li class="nav-item"><a href="admin.html" class="nav-link active">Dashboard</a></li>
+                <li class="nav-item"><a href="index.html" class="nav-link" target="_blank"><i class="fa-solid fa-arrow-up-right-from-square"></i> Live Site</a></li>
+                <li class="nav-item"><a href="#" onclick="logoutUser()" class="nav-link btn-logout"><i class="fa-solid fa-arrow-right-from-bracket"></i> Logout</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="container section-space">
+        <!-- Dashboard Key Metrics Grid -->
+        <div class="admin-metrics-grid">
+            <div class="metric-card">
+                <div class="metric-icon bg-blue"><i class="fa-solid fa-calendar-days"></i></div>
+                <div>
+                    <h3 id="adm-stat-events">0</h3>
+                    <p>Total Events</p>
+                </div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-icon bg-green"><i class="fa-solid fa-ticket"></i></div>
+                <div>
+                    <h3 id="adm-stat-bookings">0</h3>
+                    <p>Total Bookings</p>
+                </div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-icon bg-purple"><i class="fa-solid fa-users"></i></div>
+                <div>
+                    <h3 id="adm-stat-users">0</h3>
+                    <p>Registered Users</p>
+                </div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-icon bg-orange"><i class="fa-solid fa-layer-group"></i></div>
+                <div>
+                    <h3>7</h3>
+                    <p>Event Categories</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation Tabs -->
+        <div class="admin-tab-bar margin-top-2">
+            <button class="tab-btn active" id="adm-tab-events" onclick="switchAdminTab('events')">
+                <i class="fa-solid fa-calendar-plus"></i> Manage Events
+            </button>
+            <button class="tab-btn" id="adm-tab-bookings" onclick="switchAdminTab('bookings')">
+                <i class="fa-solid fa-receipt"></i> Manage Bookings
+            </button>
+        </div>
+
+        <!-- SECTION: MANAGE EVENTS -->
+        <div id="adm-section-events" class="admin-section margin-top-2">
+            <div class="admin-section-header">
+                <h2>Platform Events Catalog</h2>
+                <button class="btn btn-primary shadow-btn" onclick="openAddEventModal()">
+                    <i class="fa-solid fa-plus"></i> Add New Event
+                </button>
+            </div>
+
+            <div class="filter-panel margin-top-1">
+                <div class="filter-grid">
+                    <div class="form-group span-2">
+                        <input type="text" id="adm-search-events" class="form-control" placeholder="Search event by name..." oninput="adminFilterEvents()">
+                    </div>
+                    <div class="form-group">
+                        <select id="adm-filter-category" class="form-control" onchange="adminFilterEvents()">
+                            <option value="ALL">All Categories</option>
+                            <option value="IT">IT</option>
+                            <option value="NON-IT">NON-IT</option>
+                            <option value="GOVERNMENT">GOVERNMENT</option>
+                            <option value="SCIENCE">SCIENCE</option>
+                            <option value="EXHIBITION">EXHIBITION</option>
+                            <option value="EDUCATION">EDUCATION</option>
+                            <option value="CULTURAL">CULTURAL</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Events Table -->
+            <div class="table-responsive margin-top-1">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Image</th>
+                            <th>Event Name</th>
+                            <th>Category</th>
+                            <th>Date & Time</th>
+                            <th>Location</th>
+                            <th>Price</th>
+                            <th>Source</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="adm-events-tbody">
+                        <!-- Dynamic Rows -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- SECTION: MANAGE BOOKINGS -->
+        <div id="adm-section-bookings" class="admin-section hidden margin-top-2">
+            <div class="admin-section-header">
+                <h2>All User Bookings</h2>
+                <div class="search-box-inline">
+                    <input type="text" id="adm-search-bookings" class="form-control" placeholder="Search by Booking ID, User, or Event..." oninput="adminSearchBookings()">
+                </div>
+            </div>
+
+            <div class="table-responsive margin-top-1">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Booking ID</th>
+                            <th>User Name</th>
+                            <th>Email</th>
+                            <th>Event Title</th>
+                            <th>Date</th>
+                            <th>Seats</th>
+                            <th>Amount</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="adm-bookings-tbody">
+                        <!-- Dynamic Rows -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add / Edit Event Modal -->
+    <div id="admin-event-modal" class="modal-overlay hidden">
+        <div class="modal-content modal-lg">
+            <button class="modal-close" onclick="closeAdminEventModal()"><i class="fa-solid fa-xmark"></i></button>
+            <h2 id="modal-event-title">Add New Event</h2>
+            
+            <form id="admin-event-form" class="margin-top-15" onsubmit="saveAdminEvent(event)">
+                <input type="hidden" id="adm-evt-id">
+                
+                <div class="form-grid-2">
+                    <div class="form-group">
+                        <label>Event Name *</label>
+                        <input type="text" id="adm-evt-name" class="form-control" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Category *</label>
+                        <select id="adm-evt-category" class="form-control" required>
+                            <option value="IT">IT</option>
+                            <option value="NON-IT">NON-IT</option>
+                            <option value="GOVERNMENT">GOVERNMENT</option>
+                            <option value="SCIENCE">SCIENCE</option>
+                            <option value="EXHIBITION">EXHIBITION</option>
+                            <option value="EDUCATION">EDUCATION</option>
+                            <option value="CULTURAL">CULTURAL</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Date *</label>
+                        <input type="date" id="adm-evt-date" class="form-control" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Time *</label>
+                        <input type="time" id="adm-evt-time" class="form-control" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>State *</label>
+                        <select id="adm-evt-state" class="form-control" onchange="updateAdminDistricts()" required>
+                            <option value="Tamil Nadu">Tamil Nadu</option>
+                            <option value="Karnataka">Karnataka</option>
+                            <option value="Kerala">Kerala</option>
+                            <option value="Maharashtra">Maharashtra</option>
+                            <option value="Telangana">Telangana</option>
+                            <option value="Andhra Pradesh">Andhra Pradesh</option>
+                            <option value="Delhi">Delhi</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>District / City *</label>
+                        <select id="adm-evt-district" class="form-control" required>
+                            <!-- Injected dynamically -->
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Ticket Price (₹) *</label>
+                        <input type="number" id="adm-evt-price" class="form-control" min="0" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Image URL *</label>
+                        <input type="url" id="adm-evt-image" class="form-control" placeholder="https://..." required>
+                    </div>
+                </div>
+
+                <div class="form-group margin-top-1">
+                    <label>Venue Name *</label>
+                    <input type="text" id="adm-evt-venue" class="form-control" required>
+                </div>
+
+                <div class="form-group margin-top-1">
+                    <label>Event Description</label>
+                    <textarea id="adm-evt-desc" class="form-control" rows="3"></textarea>
+                </div>
+
+                <div class="modal-actions margin-top-2">
+                    <button type="button" class="btn btn-outline" onclick="closeAdminEventModal()">Cancel</button>
+                    <button type="submit" class="btn btn-primary shadow-btn">Save Event</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container footer-content">
+            <p>&copy; 2026 EventHub Admin Dashboard. Restricted Access.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

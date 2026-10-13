@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EventHub - About System</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header class="navbar-header">
+        <nav class="navbar">
+            <a href="index.html" class="nav-logo">
+                <i class="fa-solid fa-ticket"></i>
+                <span>EventHub</span>
+            </a>
+            <ul class="nav-menu">
+                <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
+                <li class="nav-item"><a href="events.html" class="nav-link">Events</a></li>
+                <li class="nav-item"><a href="bookings.html" class="nav-link">My Bookings</a></li>
+                <li class="nav-item"><a href="about.html" class="nav-link active">About</a></li>
+                <li class="nav-item"><a href="#" onclick="logoutUser()" class="nav-link btn-logout"><i class="fa-solid fa-arrow-right-from-bracket"></i> Logout</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="container section-space">
+        <!-- Project Title Header -->
+        <div class="text-center max-w-700 margin-center">
+            <span class="badge">College Academic Project</span>
+            <h1 class="margin-top-05">Event Booking Management System</h1>
+            <p class="subtitle">A full-featured, responsive, client-side Web Application for discovery, seat reservation, real-time ticket generation, and event administration.</p>
+        </div>
+
+        <div class="about-grid margin-top-3">
+            <!-- Objective Card -->
+            <div class="card">
+                <div class="card-body">
+                    <h3><i class="fa-solid fa-bullseye icon-color"></i> Project Objective</h3>
+                    <p class="margin-top-1">To design and engineer an intuitive end-to-end platform that enables users to browse live national & international events, choose seats visually, receive instantly generated QR-code tickets, and manage bookings locally without backend overhead.</p>
+                </div>
+            </div>
+
+            <!-- Architecture Card -->
+            <div class="card">
+                <div class="card-body">
+                    <h3><i class="fa-solid fa-code icon-color"></i> Core Technologies</h3>
+                    <ul class="tech-list margin-top-1">
+                        <li><strong>HTML5:</strong> Semantic UI Structure & Accessibility</li>
+                        <li><strong>CSS3:</strong> Custom Flexbox/Grid, Animations & Media Queries</li>
+                        <li><strong>JavaScript (ES6+):</strong> Async/Fetch API, LocalStorage Engine, DOM Manipulation</li>
+                        <li><strong>Ticketmaster API:</strong> Live Events REST Endpoint integration</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Workflow / How it works -->
+        <div class="margin-top-3">
+            <h2 class="text-center">How System Operates</h2>
+            <div class="workflow-steps margin-top-2">
+                <div class="step-card">
+                    <div class="step-num">1</div>
+                    <h4>Auth & Role</h4>
+                    <p>Users register & authenticate locally. Admin logs in with specialized permissions.</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-num">2</div>
+                    <h4>Live Fetch & Filter</h4>
+                    <p>Integrates with REST API for real-time events filtered by Indian States & Districts.</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-num">3</div>
+                    <h4>Visual Booking</h4>
+                    <p>Interactive seat matrix calculates exact total fare and convenience fees.</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-num">4</div>
+                    <h4>E-Ticket & QR</h4>
+                    <p>Generates unique Booking ID and Client-side QR code stored in LocalStorage.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Future Enhancements -->
+        <div class="card margin-top-3 bg-light-card">
+            <div class="card-body">
+                <h2><i class="fa-solid fa-rocket icon-color"></i> Future Enhancements Roadmap</h2>
+                <div class="roadmap-grid margin-top-15">
+                    <div class="roadmap-item"><i class="fa-solid fa-brain"></i> Native AI-based event recommendations using OpenAI API</div>
+                    <div class="roadmap-item"><i class="fa-solid fa-credit-card"></i> Online payment gateway integration (Razorpay / Stripe)</div>
+                    <div class="roadmap-item"><i class="fa-solid fa-arrows-rotate"></i> Real-time WebSocket seat availability locks</div>
+                    <div class="roadmap-item"><i class="fa-solid fa-bell"></i> Push notifications for upcoming event schedules</div>
+                    <div class="roadmap-item"><i class="fa-solid fa-map-location-dot"></i> Interactive Google Maps venue navigation</div>
+                    <div class="roadmap-item"><i class="fa-solid fa-mobile-screen"></i> Cross-platform mobile app build (React Native)</div>
+                    <div class="roadmap-item"><i class="fa-solid fa-server"></i> Scalable Microservices Backend (Node.js & MongoDB)</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container footer-content">
+            <p>&copy; 2026 EventHub Management System. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

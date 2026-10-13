@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EventHub - Live Events</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header class="navbar-header">
+        <nav class="navbar">
+            <a href="index.html" class="nav-logo">
+                <i class="fa-solid fa-ticket"></i>
+                <span>EventHub</span>
+            </a>
+            <ul class="nav-menu">
+                <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
+                <li class="nav-item"><a href="events.html" class="nav-link active">Events</a></li>
+                <li class="nav-item"><a href="bookings.html" class="nav-link">My Bookings</a></li>
+                <li class="nav-item"><a href="about.html" class="nav-link">About</a></li>
+                <li class="nav-item"><a href="#" onclick="logoutUser()" class="nav-link btn-logout"><i class="fa-solid fa-arrow-right-from-bracket"></i> Logout</a></li>
+            </ul>
+            <div class="hamburger" onclick="toggleMobileMenu()">
+                <i class="fa-solid fa-bars"></i>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container section-space">
+        <!-- Search and Filter Control Panel -->
+        <div class="filter-panel">
+            <div class="filter-header">
+                <h3><i class="fa-solid fa-sliders"></i> Filter & Search Events</h3>
+                <button class="btn-text" onclick="resetFilters()"><i class="fa-solid fa-rotate-right"></i> Reset</button>
+            </div>
+            <div class="filter-grid">
+                <!-- Keyword Search -->
+                <div class="form-group span-2">
+                    <label>Search Keyword / Event Name</label>
+                    <div class="input-icon-wrapper">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                        <input type="text" id="filter-search" placeholder="Search concerts, tech talks..." oninput="filterEvents()">
+                    </div>
+                </div>
+
+                <!-- Category -->
+                <div class="form-group">
+                    <label>Category</label>
+                    <select id="filter-category" class="form-control" onchange="filterEvents()">
+                        <option value="ALL">All Categories</option>
+                        <option value="IT">IT</option>
+                        <option value="NON-IT">NON-IT</option>
+                        <option value="GOVERNMENT">GOVERNMENT</option>
+                        <option value="SCIENCE">SCIENCE</option>
+                        <option value="EXHIBITION">EXHIBITION</option>
+                        <option value="EDUCATION">EDUCATION</option>
+                        <option value="CULTURAL">CULTURAL</option>
+                    </select>
+                </div>
+
+                <!-- State -->
+                <div class="form-group">
+                    <label>State</label>
+                    <select id="filter-state" class="form-control" onchange="updateDistricts(); filterEvents();">
+                        <option value="ALL">All States</option>
+                        <option value="Tamil Nadu">Tamil Nadu</option>
+                        <option value="Karnataka">Karnataka</option>
+                        <option value="Kerala">Kerala</option>
+                        <option value="Maharashtra">Maharashtra</option>
+                        <option value="Telangana">Telangana</option>
+                        <option value="Andhra Pradesh">Andhra Pradesh</option>
+                        <option value="Delhi">Delhi</option>
+                    </select>
+                </div>
+
+                <!-- District -->
+                <div class="form-group">
+                    <label>District / City</label>
+                    <select id="filter-district" class="form-control" onchange="filterEvents()">
+                        <option value="ALL">All Cities</option>
+                    </select>
+                </div>
+
+                <!-- Date Range Filter -->
+                <div class="form-group">
+                    <label>Timing</label>
+                    <select id="filter-date" class="form-control" onchange="filterEvents()">
+                        <option value="ALL">All Dates</option>
+                        <option value="UPCOMING">Upcoming</option>
+                        <option value="TODAY">Today</option>
+                        <option value="THIS_WEEK">This Week</option>
+                        <option value="THIS_MONTH">This Month</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- Ticketmaster API Status Alert (Missing Key Warning) -->
+        <div id="api-status-banner" class="api-warning-banner hidden">
+            <i class="fa-solid fa-triangle-exclamation"></i>
+            <div>
+                <strong>Live event data is unavailable.</strong> Please add your Ticketmaster API key inside <code>script.js</code> (<code>TICKETMASTER_API_KEY</code>). Showing internal platform events.
+            </div>
+        </div>
+
+        <!-- Main Events Listing Grid -->
+        <div id="events-grid" class="events-grid">
+            <!-- Dynamically populated cards or skeleton loaders -->
+        </div>
+    </div>
+
+    <!-- Event Details Modal -->
+    <div id="event-modal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeEventModal()"><i class="fa-solid fa-xmark"></i></button>
+            <div id="modal-body">
+                <!-- Dynamic Content injected via JS -->
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container footer-content">
+            <p>&copy; 2026 EventHub Management System. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

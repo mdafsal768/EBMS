@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EBMS - Home</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    
+    <!-- Chatbot Custom CSS Rules -->
+    <style>
+        .chatbot-toggler {
+            position: fixed;
+            bottom: 30px;
+            right: 35px;
+            outline: none;
+            border: none;
+            height: 50px;
+            width: 50px;
+            display: flex;
+            cursor: pointer;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: #4f46e5;
+            transition: all 0.2s ease;
+            z-index: 1000;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        .chatbot-toggler i {
+            color: #fff;
+            font-size: 1.4rem;
+            position: absolute;
+        }
+        .chatbot-toggler i:last-child,
+        body.show-chatbot .chatbot-toggler i:first-child {
+            opacity: 0;
+        }
+        body.show-chatbot .chatbot-toggler i:last-child {
+            opacity: 1;
+        }
+        .chatbot {
+            position: fixed;
+            right: 35px;
+            bottom: 90px;
+            width: 380px;
+            background: #fff;
+            border-radius: 15px;
+            overflow: hidden;
+            opacity: 0;
+            pointer-events: none;
+            transform: scale(0.5);
+            transform-origin: bottom right;
+            box-shadow: 0 0 128px 0 rgba(0,0,0,0.1), 0 32px 64px -48px rgba(0,0,0,0.5);
+            transition: all 0.1s ease;
+            z-index: 1000;
+            border: 1px solid #e2e8f0;
+        }
+        body.show-chatbot .chatbot {
+            opacity: 1;
+            pointer-events: auto;
+            transform: scale(1);
+        }
+        .chatbot header {
+            padding: 16px 0;
+            position: relative;
+            text-align: center;
+            color: #fff;
+            background: #4f46e5;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .chatbot header span {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            display: none;
+            cursor: pointer;
+            transform: translateY(-50%);
+        }
+        .chatbot .chatbox {
+            overflow-y: auto;
+            height: 320px;
+            padding: 15px 20px 70px;
+            list-style: none;
+        }
+        .chatbox .chat {
+            display: flex;
+            list-style: none;
+            margin-bottom: 12px;
+        }
+        .chatbox .outgoing {
+            margin: 10px 0;
+            justify-content: flex-end;
+        }
+        .chatbox .incoming span {
+            width: 32px;
+            height: 32px;
+            color: #fff;
+            background: #4f46e5;
+            text-align: center;
+            line-height: 32px;
+            border-radius: 4px;
+            margin: 0 10px 7px 0;
+            align-self: flex-end;
+            font-size: 0.8rem;
+        }
+        .chatbox .chat p {
+            white-space: pre-wrap;
+            padding: 10px 14px;
+            border-radius: 10px;
+            max-width: 75%;
+            color: #1e293b;
+            font-size: 0.9rem;
+            background: #f1f5f9;
+        }
+        .chatbox .outgoing p {
+            background: #4f46e5;
+            color: #fff;
+            border-radius: 10px 10px 0 10px;
+        }
+        .chatbox .incoming p {
+            border-radius: 10px 10px 10px 0;
+        }
+        .chatbot .chat-input {
+            display: flex;
+            gap: 5px;
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            background: #fff;
+            padding: 6px 15px;
+            border-top: 1px solid #ddd;
+        }
+        .chat-input textarea {
+            height: 45px;
+            width: 100%;
+            border: none;
+            outline: none;
+            resize: none;
+            max-height: 180px;
+            padding: 12px 15px 0 0;
+            font-size: 0.95rem;
+            font-family: inherit;
+        }
+        .chat-input span {
+            align-self: flex-end;
+            color: #4f46e5;
+            cursor: pointer;
+            height: 45px;
+            line-height: 45px;
+            font-size: 1.25rem;
+        }
+        @media (max-width: 490px) {
+            .chatbot {
+                right: 0;
+                bottom: 0;
+                height: 100%;
+                width: 100%;
+                border-radius: 0;
+            }
+            .chatbot .chatbox {
+                height: 90%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Global Header / Navigation -->
+    <header class="navbar-header">
+        <nav class="navbar">
+            <a href="index.html" class="nav-logo">
+                <i class="fa-solid fa-ticket"></i>
+                <span>EBMS</span>
+            </a>
+            <ul class="nav-menu">
+                <li class="nav-item"><a href="index.html" class="nav-link active">Home</a></li>
+                <li class="nav-item"><a href="events.html" class="nav-link">Events</a></li>
+                <li class="nav-item"><a href="bookings.html" class="nav-link">My Bookings</a></li>
+                <li class="nav-item"><a href="about.html" class="nav-link">About</a></li>
+                <li class="nav-item"><a href="#" onclick="logoutUser()" class="nav-link btn-logout"><i class="fa-solid fa-arrow-right-from-bracket"></i> Logout</a></li>
+            </ul>
+            <div class="hamburger" onclick="toggleMobileMenu()">
+                <i class="fa-solid fa-bars"></i>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Animated Hero Section -->
+    <section class="hero-section">
+        <div class="hero-bg-overlay"></div>
+        <div class="hero-content text-center">
+            <span class="hero-badge"><i class="fa-solid fa-sparkles"></i> The Premier Booking Platform</span>
+            <h1 class="hero-title">Discover. Book. Experience.</h1>
+            <p class="hero-subtitle">Connect with live concerts, technical expos, cultural festivals, and educational summits happening across India.</p>
+            <div class="hero-actions">
+                <a href="events.html" class="btn btn-primary btn-lg shadow-btn"><i class="fa-solid fa-compass"></i> Explore Events</a>
+                <a href="bookings.html" class="btn btn-outline btn-lg"><i class="fa-solid fa-receipt"></i> View My Bookings</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Category Showcase Grid -->
+    <section class="container section-space">
+        <div class="section-header text-center">
+            <h2>Explore Categories</h2>
+            <p>Find extraordinary events tailored specifically to your passion</p>
+        </div>
+        <div class="category-grid">
+            <div class="category-card" onclick="selectCategory('IT')">
+                <div class="category-img" style="background-image: url('https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=600&q=80');"></div>
+                <div class="category-overlay">
+                    <i class="fa-solid fa-laptop-code category-icon"></i>
+                    <h3>IT & Tech</h3>
+                    <p>Hackathons, Developer Conferences & Tech Summits</p>
+                    <span class="cat-link">View Events <i class="fa-solid fa-arrow-right"></i></span>
+                </div>
+            </div>
+
+            <div class="category-card" onclick="selectCategory('NON-IT')">
+                <div class="category-img" style="background-image: url('https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=600&q=80');"></div>
+                <div class="category-overlay">
+                    <i class="fa-solid fa-briefcase category-icon"></i>
+                    <h3>NON-IT & Business</h3>
+                    <p>Management Summits, Leadership & Startups</p>
+                    <span class="cat-link">View Events <i class="fa-solid fa-arrow-right"></i></span>
+                </div>
+            </div>
+
+            <div class="category-card" onclick="selectCategory('GOVERNMENT')">
+                <div class="category-img" style="background-image: url('https://images.unsplash.com/photo-1541872703-74c5e44368f9?auto=format&fit=crop&w=600&q=80');"></div>
+                <div class="category-overlay">
+                    <i class="fa-solid fa-building-columns category-icon"></i>
+                    <h3>Government</h3>
+                    <p>Public Policy Expos, Trade Fairs & Conventions</p>
+                    <span class="cat-link">View Events <i class="fa-solid fa-arrow-right"></i></span>
+                </div>
+            </div>
+
+            <div class="category-card" onclick="selectCategory('SCIENCE')">
+                <div class="category-img" style="background-image: url('https://images.unsplash.com/photo-1532094349884-543bc11b234d?auto=format&fit=crop&w=600&q=80');"></div>
+                <div class="category-overlay">
+                    <i class="fa-solid fa-flask-vial category-icon"></i>
+                    <h3>Science</h3>
+                    <p>Robotics Fairs, Space Expos & Research Forums</p>
+                    <span class="cat-link">View Events <i class="fa-solid fa-arrow-right"></i></span>
+                </div>
+            </div>
+
+            <div class="category-card" onclick="selectCategory('EXHIBITION')">
+                <div class="category-img" style="background-image: url('https://images.unsplash.com/photo-1561214115-f2f134cc4912?auto=format&fit=crop&w=600&q=80');"></div>
+                <div class="category-overlay">
+                    <i class="fa-solid fa-palette category-icon"></i>
+                    <h3>Exhibition</h3>
+                    <p>Art Displays, Auto Shows & Industrial Fairs</p>
+                    <span class="cat-link">View Events <i class="fa-solid fa-arrow-right"></i></span>
+                </div>
+            </div>
+
+            <div class="category-card" onclick="selectCategory('EDUCATION')">
+                <div class="category-img" style="background-image: url('https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=600&q=80');"></div>
+                <div class="category-overlay">
+                    <i class="fa-solid fa-graduation-cap category-icon"></i>
+                    <h3>Education</h3>
+                    <p>Career Fairs, Academic Summits & Workshops</p>
+                    <span class="cat-link">View Events <i class="fa-solid fa-arrow-right"></i></span>
+                </div>
+            </div>
+
+            <div class="category-card" onclick="selectCategory('CULTURAL')">
+                <div class="category-img" style="background-image: url('https://images.unsplash.com/photo-1470225620780-dba8ba36b745?auto=format&fit=crop&w=600&q=80');"></div>
+                <div class="category-overlay">
+                    <i class="fa-solid fa-music category-icon"></i>
+                    <h3>Cultural</h3>
+                    <p>Music Concerts, Dance Shows & Live Performance</p>
+                    <span class="cat-link">View Events <i class="fa-solid fa-arrow-right"></i></span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Smart Event Recommendation Section -->
+    <section class="ai-recommendation-section">
+        <div class="container">
+            <div class="ai-card">
+                <div class="ai-header">
+                    <i class="fa-solid fa-wand-magic-sparkles ai-sparkle"></i>
+                    <div>
+                        <h2>Smart Event Recommendation</h2>
+                        <p>Let our dynamic algorithm match the best upcoming live events to your preference.</p>
+                    </div>
+                </div>
+                <div class="ai-form-grid">
+                    <div class="form-group">
+                        <label>Preferred Category</label>
+                        <select id="ai-pref-category" class="form-control">
+                            <option value="ALL">All Categories</option>
+                            <option value="IT">IT & Software</option>
+                            <option value="CULTURAL">Cultural & Music</option>
+                            <option value="EXHIBITION">Exhibitions</option>
+                            <option value="SCIENCE">Science & Tech</option>
+                            <option value="EDUCATION">Education</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Preferred State</label>
+                        <select id="ai-pref-state" class="form-control">
+                            <option value="ALL">All India</option>
+                            <option value="Tamil Nadu">Tamil Nadu</option>
+                            <option value="Karnataka">Karnataka</option>
+                            <option value="Maharashtra">Maharashtra</option>
+                            <option value="Delhi">Delhi</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Experience Type</label>
+                        <select id="ai-pref-type" class="form-control">
+                            <option value="ALL">Any Experience</option>
+                            <option value="FREE">Free Access / Student</option>
+                            <option value="PREMIUM">Premium / VIP</option>
+                        </select>
+                    </div>
+                </div>
+                <button onclick="runSmartRecommendation()" class="btn btn-accent shadow-btn margin-top-1">
+                    <i class="fa-solid fa-bolt"></i> Generate Recommendations
+                </button>
+
+                <div id="ai-results-wrapper" class="hidden margin-top-2">
+                    <h3 class="margin-bottom-1" style="color: var(--primary-color);"><i class="fa-solid fa-fire"></i> Recommended For You:</h3>
+                    <div id="ai-results-grid" class="events-grid"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- GEMINI AI CHATBOT INTEGRATION -->
+    <button class="chatbot-toggler" onclick="document.body.classList.toggle('show-chatbot')">
+        <i class="fa-solid fa-comment-dots"></i>
+        <i class="fa-solid fa-xmark"></i>
+    </button>
+    <div class="chatbot">
+        <header>
+            <h2><i class="fa-solid fa-robot"></i> EventHub Assistant</h2>
+            <span onclick="document.body.classList.remove('show-chatbot')">&times;</span>
+        </header>
+        <ul class="chatbox" id="chatbox">
+            <li class="chat incoming">
+                <span class="fa-solid fa-robot"></span>
+                <p>Hi there! 👋 How can I help you discover events on EventHub today?</p>
+            </li>
+        </ul>
+        <div class="chat-input">
+            <textarea placeholder="Ask about events, tickets..." spellcheck="false" id="chat-textarea" required></textarea>
+            <span id="send-btn" onclick="handleChat()"><i class="fa-solid fa-paper-plane"></i></span>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container footer-content">
+            <p>&copy; 2026 EventHub Management System. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+
+    <!-- Chatbot Engine Integration -->
+    <script>
+        const chatInput = document.getElementById("chat-textarea");
+        const sendBtn = document.getElementById("send-btn");
+        const chatbox = document.getElementById("chatbox");
+
+        const createChatLi = (message, className) => {
+            const chatLi = document.createElement("li");
+            chatLi.classList.add("chat", className);
+            let chatContent = className === "outgoing" ? `<p></p>` : `<span class="fa-solid fa-robot"></span><p></p>`;
+            chatLi.innerHTML = chatContent;
+            chatLi.querySelector("p").textContent = message;
+            return chatLi;
+        }
+
+        const generateGeminiResponse = async (incomingChatLi) => {
+            const messageElement = incomingChatLi.querySelector("p");
+            const userText = chatInput.value.trim();
+
+            if (typeof GEMINI_API_KEY === "undefined" || !GEMINI_API_KEY || GEMINI_API_KEY === "AQ.Ab8RN6LY7oHH54CBxNxzsu5Qlli4tVlwJHAtmflA-Qw6LdWcDQ") {
+                messageElement.textContent = "Gemini API Key is not configured properly in script.js";
+                return;
+            }
+
+            const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${GEMINI_API_KEY}`;
+
+            try {
+                const response = await fetch(API_URL, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        contents: [{
+                            parts: [{ text: `You are EventHub AI Assistant. Help users with event queries briefly and politely. User: ${userText}` }]
+                        }]
+                    })
+                });
+
+                const data = await response.json();
+                if (data.candidates && data.candidates[0].content) {
+                    messageElement.textContent = data.candidates[0].content.parts[0].text;
+                } else {
+                    messageElement.textContent = "Sorry, I couldn't process that request right now.";
+                }
+            } catch (error) {
+                messageElement.textContent = "Oops! Something went wrong. Please try again.";
+            }
+        };
+
+        const handleChat = () => {
+            const userMessage = chatInput.value.trim();
+            if (!userMessage) return;
+
+            chatInput.value = "";
+            chatbox.appendChild(createChatLi(userMessage, "outgoing"));
+            chatbox.scrollTo(0, chatbox.scrollHeight);
+
+            setTimeout(() => {
+                const incomingChatLi = createChatLi("Thinking...", "incoming");
+                chatbox.appendChild(incomingChatLi);
+                chatbox.scrollTo(0, chatbox.scrollHeight);
+                generateGeminiResponse(incomingChatLi);
+            }, 600);
+        };
+
+        chatInput.addEventListener("keydown", (e) => {
+            if (e.key === "Enter" && !e.shiftKey && window.innerWidth > 800) {
+                e.preventDefault();
+                handleChat();
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EventHub - My Bookings</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- QR Code Generator -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header class="navbar-header">
+        <nav class="navbar">
+            <a href="index.html" class="nav-logo">
+                <i class="fa-solid fa-ticket"></i>
+                <span>EventHub</span>
+            </a>
+            <ul class="nav-menu">
+                <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
+                <li class="nav-item"><a href="events.html" class="nav-link">Events</a></li>
+                <li class="nav-item"><a href="bookings.html" class="nav-link active">My Bookings</a></li>
+                <li class="nav-item"><a href="about.html" class="nav-link">About</a></li>
+                <li class="nav-item"><a href="#" onclick="logoutUser()" class="nav-link btn-logout"><i class="fa-solid fa-arrow-right-from-bracket"></i> Logout</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="container section-space">
+        <!-- User Profile Summary Card -->
+        <div class="user-summary-card card">
+            <div class="user-profile-info">
+                <div class="user-avatar"><i class="fa-solid fa-user"></i></div>
+                <div>
+                    <h2 id="user-display-name">User Name</h2>
+                    <p id="user-display-email" class="text-muted">user@example.com</p>
+                </div>
+            </div>
+            <div class="booking-stat-badge">
+                <span class="stat-num" id="total-booking-count">0</span>
+                <span class="stat-label">Total Bookings</span>
+            </div>
+        </div>
+
+        <!-- Bookings Filter Tabs -->
+        <div class="bookings-tab-header margin-top-2">
+            <button class="tab-btn active" id="tab-upcoming" onclick="showBookingTab('upcoming')">
+                <i class="fa-solid fa-clock"></i> Upcoming Bookings
+            </button>
+            <button class="tab-btn" id="tab-previous" onclick="showBookingTab('previous')">
+                <i class="fa-solid fa-circle-check"></i> Previous Bookings
+            </button>
+        </div>
+
+        <!-- Bookings Container -->
+        <div id="user-bookings-list" class="bookings-list-grid margin-top-2">
+            <!-- Dynamically Rendered Bookings Cards -->
+        </div>
+    </div>
+
+    <!-- Ticket Viewer Modal -->
+    <div id="ticket-modal" class="modal-overlay hidden">
+        <div class="modal-content confirmation-card">
+            <button class="modal-close" onclick="closeTicketModal()"><i class="fa-solid fa-xmark"></i></button>
+            <div id="ticket-modal-content">
+                <!-- Injected via JS -->
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container footer-content">
+            <p>&copy; 2026 EventHub Management System. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
